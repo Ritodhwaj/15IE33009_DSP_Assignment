@@ -16,6 +16,7 @@ def dft(N):#returns dft matrix
             dft_matrix[k,n]=np.exp(-(1j)*2*np.pi*k*n/N)
         
     return dft_matrix
+
 In [3]:
 def idft(N):#returns dft matrix
     idft_matrix=np.empty([N,N],dtype=np.complex_)
@@ -26,6 +27,7 @@ def idft(N):#returns dft matrix
             idft_matrix[k,n]=np.exp((1j)*2*np.pi*k*n/N)
     idft_matrix=idft_matrix/N        
     return idft_matrix
+
 In [4]:
 def dcft(N):#returns dcft matrix
     dcft_matrix=np.empty([N,N],dtype=np.complex_)
@@ -36,6 +38,7 @@ def dcft(N):#returns dcft matrix
             dcft_matrix[k,n]=2*np.cos(np.pi*k*(2*n+1)/(2*N))
         
     return dcft_matrix
+
 In [5]:
 def idcft(N):#returns dcft matrix
     idcft_matrix=np.empty([N,N],dtype=np.complex_)
@@ -50,6 +53,7 @@ def idcft(N):#returns dcft matrix
             idcft_matrix[k,n]=alpha*np.cos(np.pi*n*(2*k+1)/(2*N))
     idcft_matrix=idcft_matrix/N
     return idcft_matrix
+
 In [ ]:
 # input sequence generator
 length=100
@@ -67,6 +71,7 @@ for i in range(0,3,1):
     plt.plot(np.arange(0,length,1),err,color[i])
 
 #y=generalised_inverse_transform(0,X)
+
 In [6]:
 def mse(transform_type,x,X,N):
     err=[]
@@ -82,6 +87,7 @@ def mse(transform_type,x,X,N):
             xm=generalised_inverse_transform(2,Xm)
         err=np.append(err,dot_product(x,xm,N))
     return err
+
 In [7]:
 def dot_product(x,y,N):
     err=x-y
@@ -89,16 +95,19 @@ def dot_product(x,y,N):
     errt=np.conjugate(errt)
     
     return errt*err/N
+
 In [8]:
 def xmdft(X,L,N):
     for i in range(int((N+1-L)/2),int((N-1+L)/2)+1,1):
         X[i]=0
     return X
+
 In [9]:
 def  xdcthaar(X,L,N):
     for i in range(N-L,N):
         X[i]=0
     return X
+
 In [10]:
 def haar(N):
     if N==2:
@@ -110,10 +119,12 @@ def haar(N):
     matrix1=(pow(2,v/2))*np.identity(int(N/2))
     result2=np.concatenate((matrix1,-matrix1),axis=1)
     return np.concatenate((result1,result2),axis=0)
+
 In [11]:
 def ihaar(N):
     haar_matrix=haar(N)
     return np.transpose(haar_matrix)/N
+
 In [12]:
 def generalised_transform(transform_type,x):
     N=len(x)
@@ -125,6 +136,7 @@ def generalised_transform(transform_type,x):
     if transform_type==2:
         gtm=haar(N)
     return gtm*x
+
 In [13]:
 def generalised_inverse_transform(transform_type,X):
     N=len(X)
@@ -136,8 +148,10 @@ def generalised_inverse_transform(transform_type,X):
     if transform_type==2:
         igtm=ihaar(N)
     return igtm*X
+
 In [22]:
 haar(8)
+
 Out[22]:
 matrix([[ 1.        ,  1.        ,  1.        ,  1.        ,  1.        ,
           1.        ,  1.        ,  1.        ],
