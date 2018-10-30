@@ -27,7 +27,7 @@ def dct(N):
  
     return dct_matrix
  
-    #defining haar matrix
+#defining haar matrix
 def haar(N):
     final=[]
     if N==2:
@@ -40,9 +40,8 @@ def haar(N):
     final = np.concatenate((result1,result2),axis=0)
     return(final)
         
-
 def update_dft(l,ydft,k):
-#    print(l)
+#print(l)
 
     a = (int((k+1-l)/2))
     b = (int((k+1+l)/2))
@@ -51,24 +50,19 @@ def update_dft(l,ydft,k):
         ydft[0][k] = 0
     return ydft        
 
-
-
 def error(x,y,k):
     diff=0
     for i in range(k):
         diff += np.square(abs(x[0][i]- y[0][i]))
         
-#    print(diff)    
+#print(diff)    
     return(diff/k)
-
-
+    
 def update_dct_haar(l,mat):
     for i in range(l):
         mat[0][l]=0
     return(mat)    
-    
-     
-  
+      
 #calculating dft
 ydft = np.matmul(x,dft(k))   
 # calculating dct
@@ -76,28 +70,20 @@ ydct = np.matmul(x,dct(k))
 #calculating haar
 haar1 = np.transpose(haar(k))
 yhaar = np.matmul(x,haar1)
-yhaar = np.array(yhaar)
-
-
-    
+yhaar = np.array(yhaar)   
   
 #main code for DFT
 final_error=[] 
 for L in range(k):
     ydft_updated = update_dft(L,ydft,k)
     xinv = np.linalg.inv(dft(k))
-#    
+    
     dft_out = np.matmul(ydft_updated,xinv)
     final_error = np.append(final_error,error(x,dft_out,k))
     
-   
-    
-  
 inputx = np.arange(0,k,1) 
 
-#plt.plot(inputx,final_error)   
-        
-      
+#plt.plot(inputx,final_error)         
    
 ##main code for DCT
 final_error_dct=[] 
@@ -107,8 +93,6 @@ for L in range(k):
     dct_out = np.matmul(ydct_updated,yinv)
     final_error_dct= np.append(final_error_dct,error(x,dct_out,k))
 
-
-
 final_error_haar=[] 
 for L in range(k):
     yhaar_updated = update_dct_haar(L,yhaar)
@@ -117,8 +101,6 @@ for L in range(k):
     haar_out = np.array(haar_out)
     final_error_haar= np.append(final_error_haar,error(x,haar_out,k))
     print(L)
-
-
 
 plt.plot(inputx,final_error, 'g', label='DFT') 
 plt.plot(inputx,final_error_dct,'r', label = 'DCT') 
